@@ -32,5 +32,15 @@
 	},
 	"config": {
 		"sort-packages": true
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"OurMetrics\\Laravel\\OurMetricsServiceProvider"
+			],
+			"aliases": {
+				"OurMetrics": "OurMetrics\\Laravel\\OurMetrics"
+			}
+		}
 	}
 }
