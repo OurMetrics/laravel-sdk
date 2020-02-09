@@ -1,8 +1,6 @@
 <?php namespace OurMetrics\Laravel\Middleware;
 
 use OurMetrics\Laravel\OurMetrics;
-use OurMetrics\SDK\Exceptions\InvalidDimensionKeyException;
-use OurMetrics\SDK\Exceptions\InvalidUnitException;
 use OurMetrics\SDK\Models\Metric;
 use OurMetrics\SDK\Models\Unit;
 use Illuminate\Http\Request;
@@ -24,9 +22,6 @@ class MetricHttpProcessingTime
 	/**
 	 * @param Request $request
 	 * @param         $response
-	 *
-	 * @throws InvalidUnitException
-	 * @throws InvalidDimensionKeyException
 	 */
 	public function terminate( Request $request, $response ) {
 		OurMetrics::dispatch( new Metric(
