@@ -15,10 +15,18 @@ Uses the [OurMetrics PHP SDK](https://github.com/OurMetrics/php-sdk) under the h
 
 ## Installation
 
-Add using composer and you're good to go! 
+### 1. Install using composer.
 
 ```bash
 composer require ourmetrics/laravel-sdk
+```
+
+### 2. Add your project key
+
+Find your project key in the OurMetrics dashboard, and append it to your `.env` file as so:
+
+```
+OURMETRICS_KEY=123456789
 ```
 
 ## Usage
