@@ -5,14 +5,15 @@ use OurMetrics\SDK\Models\Unit;
 
 trait HasMetric
 {
-	public    $logsMetric         = true;
-	protected $_ourMetricsPayload = [];
+	public $logsMetric = true;
 
 	protected $metricName;
 	protected $metricValue      = 0.0;
 	protected $metricUnit       = Unit::NONE;
 	protected $metricDimensions = [];
 	protected $metricTimestamp;
+
+	protected $_ourMetricsPayload = [];
 
 	protected function getMetricName() {
 		return $this->metricName;

@@ -1,8 +1,8 @@
 <?php namespace OurMetrics\Laravel;
 
 use Illuminate\Queue\Jobs\JobName;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\ServiceProvider;
 use OurMetrics\Laravel\Traits\MetricsJobProcessingTime;
 
 class OurMetricsServiceProvider extends ServiceProvider
