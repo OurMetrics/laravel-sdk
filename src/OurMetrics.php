@@ -9,6 +9,7 @@ use OurMetrics\SDK\Models\MetricList;
  * @method static void queue( Metric[]|Metric|MetricList $metrics )
  * @method static void registerShutdownFunction()
  * @method static void dispatchQueued()
+ * @method static bool isSilenced()
  * @method static void dispatch( Metric[]|Metric|MetricList $metrics )
  */
 class OurMetrics extends \Illuminate\Support\Facades\Facade

@@ -1,9 +1,10 @@
 <?php namespace OurMetrics\Laravel;
 
+use Illuminate\Queue\Events\JobProcessed;
+use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\Jobs\JobName;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
-use OurMetrics\Laravel\Traits\MetricsJobProcessingTime;
 
 class OurMetricsServiceProvider extends ServiceProvider
 {
@@ -20,19 +21,26 @@ class OurMetricsServiceProvider extends ServiceProvider
 		// Container binding
 		OurMetrics::bind();
 
-		// Queue events
-		Queue::before( function ( MetricsJobProcessingTime $event ) {
-			if ( $event->logsMetric ) {
+		/* --------------------------------------------------------
+		 * Queue events
+		 * ----------------------------------------------------- */
+		Queue::before( function ( JobProcessing $event ) {
+			if ( ! empty( $event->logsMetric ) ) {
 				$event->setMetricMetaJobClass( JobName::resolve( \get_class( $event ), $event->job->payload() ) );
 				$event->metricTimingBegin();
 			}
 		} );
 
-		Queue::after( function ( MetricsJobProcessingTime $event ) {
-			if ( $event->logsMetric ) {
+		Queue::after( function ( JobProcessed $event ) {
+			if ( ! empty( $event->logsMetric ) ) {
 				$event->metricTimingEnd();
 				OurMetrics::queue( $event->getMetric() );
 			}
+		} );
+
+		// Ensure that queued metrics are dispatched eventually.
+		Queue::looping( function () {
+			OurMetrics::dispatchQueued();
 		} );
 	}
 

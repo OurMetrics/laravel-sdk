@@ -11,9 +11,15 @@ class Mailable extends IlluminateMailable
 	public function send( MailerContract $mailer ) {
 		parent::send( $mailer );
 
-		// todo queue metric better.. and allow changing name etc
-		OurMetrics::queue( new Metric( 'Mail sent', 1.0, Unit::COUNT, [
-			'mailable' => \get_class( $this ),
-		] ) );
+		try {
+			// todo queue metric better.. and allow changing name etc
+			OurMetrics::queue( new Metric( 'Mail sent', 1.0, Unit::COUNT, [
+				'mailable' => \get_class( $this ),
+			] ) );
+		} catch ( \Exception $exception ) {
+			if ( ! OurMetrics::isSilenced() ) {
+				throw $exception;
+			}
+		}
 	}
 }
