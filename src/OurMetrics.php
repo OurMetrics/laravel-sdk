@@ -7,6 +7,7 @@ use OurMetrics\SDK\Models\MetricList;
 
 /**
  * @method static void queue( Metric[]|Metric|MetricList $metrics )
+ * @method static void track( string $event, int|float $value = 1.0 )
  * @method static void registerShutdownFunction()
  * @method static void dispatchQueued()
  * @method static bool isSilenced()
