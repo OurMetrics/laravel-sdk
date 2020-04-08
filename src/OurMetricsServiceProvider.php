@@ -22,6 +22,43 @@ class OurMetricsServiceProvider extends ServiceProvider
 		OurMetrics::bind();
 
 		/* --------------------------------------------------------
+		 * Controller events
+		 * ----------------------------------------------------- */
+//		if(config('ourmetrics.track_controllers')) { // todo use Sentry event handler to listen
+//					$this->events->listen('', [$this, $handler]);
+//		}
+
+		/*
+			'router.matched' => 'routerMatched',                         // Until Laravel 5.1
+			'Illuminate\Routing\Events\RouteMatched' => 'routeMatched',  // Since Laravel 5.2
+		 */
+
+		/**
+		 * protected function routerMatchedHandler(Route $route)
+		 * {
+		 * if ($route->getName()) {
+		 * // someaction (route name/alias)
+		 * $routeName = $route->getName();
+		 * } elseif ($route->getActionName()) {
+		 * // SomeController@someAction (controller action)
+		 * $routeName = $route->getActionName();
+		 * }
+		 * if (empty($routeName) || $routeName === 'Closure') {
+		 * // /someaction // Fallback to the url
+		 * $routeName = $route->uri();
+		 * }
+		 *
+		 * Integration::addBreadcrumb(new Breadcrumb(
+		 * Breadcrumb::LEVEL_INFO,
+		 * Breadcrumb::TYPE_NAVIGATION,
+		 * 'route',
+		 * $routeName
+		 * ));
+		 * Integration::setTransaction($routeName);
+		 * }
+		 */
+
+		/* --------------------------------------------------------
 		 * Queue events
 		 * ----------------------------------------------------- */
 		Queue::before( function ( JobProcessing $event ) {
@@ -40,7 +77,11 @@ class OurMetricsServiceProvider extends ServiceProvider
 
 		// Ensure that queued metrics are dispatched eventually.
 		Queue::looping( function () {
-			OurMetrics::dispatchQueued();
+			try {
+				OurMetrics::dispatchQueued();
+			} catch ( \Exception $exception ) {
+				// Let us not break the app because of metrics. App > Metrics
+			}
 		} );
 	}
 
