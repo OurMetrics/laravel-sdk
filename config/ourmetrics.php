@@ -10,14 +10,25 @@
 
 	/*
 	|--------------------------------------------------------------------------
+	| Track controller methods
+	|--------------------------------------------------------------------------
+	|
+	| When enabled, every controller method called will be monitored and counted.
+	|
+	| Example: UserController@store
+	*/
+	'track_controllers'    => false,
+
+	/*
+	|--------------------------------------------------------------------------
 	| HTTP Connection
 	|--------------------------------------------------------------------------
 	|
 	| - Endpoint to send metrics to.
 	| - Connection timeout
 	*/
-	'endpoint'             => 'https://api.ourmetrics.app/metrics',
-	'timeout'              => 2.0,
+	'endpoint'             => env( 'OURMETRICS_ENDPOINT', 'https://api.ourmetrics.app/metrics' ),
+	'timeout'              => env( 'OURMETRICS_TIMEOUT', 2.0 ),
 
 	/*
 	|--------------------------------------------------------------------------

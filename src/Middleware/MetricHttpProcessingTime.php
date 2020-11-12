@@ -1,9 +1,9 @@
 <?php namespace OurMetrics\Laravel\Middleware;
 
+use Illuminate\Http\Request;
 use OurMetrics\Laravel\OurMetrics;
 use OurMetrics\SDK\Models\Metric;
 use OurMetrics\SDK\Models\Unit;
-use Illuminate\Http\Request;
 
 class MetricHttpProcessingTime
 {
