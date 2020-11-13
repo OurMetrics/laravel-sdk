@@ -1,5 +1,6 @@
-<?php namespace OurMetrics\Laravel\Traits;
+<?php namespace OurMetrics\Laravel\Jobs;
 
+use OurMetrics\Laravel\Traits\HasMetric;
 use OurMetrics\SDK\Models\Unit;
 
 class MetricEnabledJob
