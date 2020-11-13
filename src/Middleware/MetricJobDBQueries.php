@@ -36,6 +36,7 @@ class MetricJobDBQueries
 			foreach ( $this->dbConnections as $connection ) {
 				$queries += \count( DB::connection( $connection )->getQueryLog() );
 				DB::connection( $connection )->disableQueryLog();
+				DB::connection( $connection )->flushQueryLog();
 			}
 
 			OurMetrics::queue( new Metric(
