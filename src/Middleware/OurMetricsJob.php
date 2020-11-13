@@ -7,8 +7,6 @@ use OurMetrics\SDK\Models\Unit;
 
 class OurMetricsJob
 {
-	use HasMetric;
-
 	/**
 	 * @param mixed    $job
 	 * @param callable $next
