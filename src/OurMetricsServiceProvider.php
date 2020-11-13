@@ -1,14 +1,12 @@
 <?php namespace OurMetrics\Laravel;
 
-use Illuminate\Queue\Events\JobProcessed;
-use Illuminate\Queue\Events\JobProcessing;
-use Illuminate\Queue\Jobs\JobName;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
 
 class OurMetricsServiceProvider extends ServiceProvider
 {
-	public function boot() {
+	public function boot()
+	{
 		// Config
 		$this->publishes( [
 			__DIR__ . '/../config/ourmetrics.php' => config_path( 'ourmetrics.php' ),
@@ -61,23 +59,9 @@ class OurMetricsServiceProvider extends ServiceProvider
 		/* --------------------------------------------------------
 		 * Queue events
 		 * ----------------------------------------------------- */
-		Queue::before( function ( JobProcessing $event ) {
-			if ( ! empty( $event->logsMetric ) ) {
-				$event->setMetricMetaJobClass( JobName::resolve( \get_class( $event ), $event->job->payload() ) );
-				$event->metricTimingBegin();
-			}
-		} );
-
-		Queue::after( function ( JobProcessed $event ) {
-			if ( ! empty( $event->logsMetric ) ) {
-				$event->metricTimingEnd();
-				OurMetrics::queue( $event->getMetric() );
-			}
-		} );
-
-		// Ensure that queued metrics are dispatched eventually.
 		Queue::looping( function () {
 			try {
+				// Ensure that queued metrics are dispatched eventually.
 				OurMetrics::dispatchQueued();
 			} catch ( \Exception $exception ) {
 				// Let us not break the app because of metrics. App > Metrics
@@ -85,7 +69,8 @@ class OurMetricsServiceProvider extends ServiceProvider
 		} );
 	}
 
-	public function register() {
+	public function register()
+	{
 		//
 	}
 }
