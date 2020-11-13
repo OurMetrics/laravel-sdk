@@ -1,11 +1,10 @@
 <?php namespace OurMetrics\Laravel\Middleware;
 
 use OurMetrics\Laravel\OurMetrics;
-use OurMetrics\Laravel\Traits\HasMetric;
 use OurMetrics\SDK\Models\Metric;
 use OurMetrics\SDK\Models\Unit;
 
-class OurMetricsJob
+class MetricJobProcessingTime
 {
 	/**
 	 * @param mixed    $job
