@@ -20,20 +20,18 @@ class OurMetricsJob
 	{
 		$start = microtime( true );
 
-		echo "Going to next ....\n";
 		$next( $job );
-		echo "Sending to OurMetrics ....\n";
 
 		$end = microtime( true );
 
-		if ( empty($job->logsMetric)  ) {
-			OurMetrics::queue( new Metric( [
-				method_exists($job, 'getMetricName') ? $job->getMetricName() : 'Queue processing time',
+		if ( empty( $job->logsMetric ) ) {
+			OurMetrics::queue( new Metric(
+				method_exists( $job, 'getMetricName' ) ? $job->getMetricName() : 'Queue processing time',
 				$end - $start,
-				method_exists($job, 'getMetricUnit') ? $job->getMetricUnit() : Unit::SECONDS,
-				method_exists($job, 'getMetricDimensions') ? $job->getMetricDimensions() : [],
-				method_exists($job, 'getMetricTimestamp') ? $job->getMetricTimestamp() : new \DateTime(),
-			] ) );
+				method_exists( $job, 'getMetricUnit' ) ? $job->getMetricUnit() : Unit::SECONDS,
+				method_exists( $job, 'getMetricDimensions' ) ? $job->getMetricDimensions() : [],
+				method_exists( $job, 'getMetricTimestamp' ) ? $job->getMetricTimestamp() : new \DateTime(),
+			) );
 		}
 	}
 
