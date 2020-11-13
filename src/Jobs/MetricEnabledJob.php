@@ -2,30 +2,35 @@
 
 use OurMetrics\SDK\Models\Unit;
 
-trait MetricsJobProcessingTime
+class MetricEnabledJob
 {
 	use HasMetric;
 
 	public $metricUnit = Unit::SECONDS;
 	public $metricName = 'Queue Processing time';
 
-	public function setMetricMetaJobClass( $jobClass ) {
+	public function setMetricMetaJobClass( $jobClass )
+	{
 		$this->_ourMetricsPayload['jobClass'] = $jobClass;
 	}
 
-	public function metricTimingBegin() {
+	public function metricTimingBegin()
+	{
 		$this->_ourMetricsPayload['start'] = microtime( true );
 	}
 
-	public function metricTimingEnd() {
+	public function metricTimingEnd()
+	{
 		$this->_ourMetricsPayload['end'] = microtime( true );
 	}
 
-	protected function getMetricValue() {
+	protected function getMetricValue()
+	{
 		return ( $this->_ourMetricsPayload['end'] ?? 0.0 ) - ( $this->_ourMetricsPayload['start'] ?? 0.0 );
 	}
 
-	protected function getMetricDimensions() {
+	protected function getMetricDimensions()
+	{
 		return [ 'job' => $this->_ourMetricsPayload['jobClass'] ?? 'Unknown' ];
 	}
 }

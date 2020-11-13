@@ -7,31 +7,31 @@ trait HasMetric
 {
 	public $logsMetric = true;
 
-	protected $metricName;
-	protected $metricValue      = 0.0;
-	protected $metricUnit       = Unit::NONE;
-	protected $metricDimensions = [];
-	protected $metricTimestamp;
+	public $metricName;
+	public $metricValue      = 0.0;
+	public $metricUnit       = Unit::NONE;
+	public $metricDimensions = [];
+	public $metricTimestamp;
 
 	protected $_ourMetricsPayload = [];
 
-	protected function getMetricName() {
+	public function getMetricName() {
 		return $this->metricName;
 	}
 
-	protected function getMetricValue() {
+	public function getMetricValue() {
 		return $this->metricValue;
 	}
 
-	protected function getMetricUnit() {
+	public function getMetricUnit() {
 		return $this->metricUnit;
 	}
 
-	protected function getMetricDimensions() {
+	public function getMetricDimensions() {
 		return $this->metricDimensions;
 	}
 
-	protected function getMetricTimestamp() {
+	public function getMetricTimestamp() {
 		return $this->metricTimestamp ?? new \DateTime();
 	}
 
