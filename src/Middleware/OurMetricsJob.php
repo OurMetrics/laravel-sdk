@@ -35,13 +35,8 @@ class OurMetricsJob
 		}
 	}
 
-	public function setMetricMetaJobClass( $jobClass )
-	{
-		$this->_ourMetricsPayload['jobClass'] = $jobClass;
-	}
-
 	protected function getMetricDimensions()
 	{
-		return [ 'job' => $this->_ourMetricsPayload['jobClass'] ?? 'Unknown' ];
+		return [ 'job' => \get_class( $this ) ];
 	}
 }
