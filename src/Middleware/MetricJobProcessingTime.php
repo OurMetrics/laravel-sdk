@@ -23,7 +23,7 @@ class MetricJobProcessingTime
 
 		if ( empty( $job->logsMetric ) ) {
 			OurMetrics::queue( new Metric(
-				method_exists( $job, 'getMetricName' ) ? $job->getMetricName() : 'Queue processing time',
+				method_exists( $job, 'getMetricName' ) ? $job->getMetricName() : 'Queue: Time per Job',
 				$end - $start,
 				method_exists( $job, 'getMetricUnit' ) ? $job->getMetricUnit() : Unit::SECONDS,
 				method_exists( $job, 'getMetricDimensions' ) ? $job->getMetricDimensions() : $this->getMetricDimensions( $job ),
