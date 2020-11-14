@@ -26,7 +26,7 @@ class MetricJobProcessingTime
 				method_exists( $job, 'getMetricName' ) ? $job->getMetricName() : 'Queue processing time',
 				$end - $start,
 				method_exists( $job, 'getMetricUnit' ) ? $job->getMetricUnit() : Unit::SECONDS,
-				method_exists( $job, 'getMetricDimensions' ) ? $job->getMetricDimensions() : [],
+				method_exists( $job, 'getMetricDimensions' ) ? $job->getMetricDimensions() : $this->getMetricDimensions(),
 				method_exists( $job, 'getMetricTimestamp' ) ? $job->getMetricTimestamp() : new \DateTime(),
 			) );
 		}
