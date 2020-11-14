@@ -43,14 +43,14 @@ class MetricJobDBQueries
 				method_exists( $job, 'getMetricName' ) ? $job->getMetricName() : 'Queue DB calls',
 				$queries,
 				method_exists( $job, 'getMetricUnit' ) ? $job->getMetricUnit() : Unit::COUNT,
-				method_exists( $job, 'getMetricDimensions' ) ? $job->getMetricDimensions() : [],
+				method_exists( $job, 'getMetricDimensions' ) ? $job->getMetricDimensions() : $this->getMetricDimensions($job),
 				method_exists( $job, 'getMetricTimestamp' ) ? $job->getMetricTimestamp() : new \DateTime(),
 			) );
 		}
 	}
 
-	protected function getMetricDimensions()
+	protected function getMetricDimensions($job)
 	{
-		return [ 'job' => \get_class( $this ) ];
+		return [ 'job' => \get_class( $job ) ];
 	}
 }
