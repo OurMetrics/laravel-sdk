@@ -40,7 +40,7 @@ class OurMetricsServiceProvider extends ServiceProvider
 		} );
 
 		/* --------------------------------------------------------
-		 * Queue events
+		 * Middleware alias
 		 * ----------------------------------------------------- */
 		$router = $this->app->make( Router::class );
 		$router->aliasMiddleware( 'ourmetrics', MetricHttpProcessingTime::class );
