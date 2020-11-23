@@ -1,22 +1,30 @@
 <?php namespace OurMetrics\Laravel;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
+use OurMetrics\Laravel\Middleware\MetricHttpProcessingTime;
 
 class OurMetricsServiceProvider extends ServiceProvider
 {
 	public function boot()
 	{
-		// Config
-		$this->publishes( [
-			__DIR__ . '/../config/ourmetrics.php' => config_path( 'ourmetrics.php' ),
-		] );
+		/* --------------------------------------------------------
+		 * Config
+		 * ----------------------------------------------------- */
+		if ( $this->app->runningInConsole() ) {
+			$this->publishes( [
+				__DIR__ . '/../config/ourmetrics.php' => config_path( 'ourmetrics.php' ),
+			] );
 
-		$this->mergeConfigFrom(
-			__DIR__ . '/../config/ourmetrics.php', 'ourmetrics'
-		);
+			$this->mergeConfigFrom(
+				__DIR__ . '/../config/ourmetrics.php', 'ourmetrics'
+			);
+		}
 
-		// Container binding
+		/* --------------------------------------------------------
+		 * Container binding
+		 * ----------------------------------------------------- */
 		OurMetrics::bind();
 
 		/* --------------------------------------------------------
@@ -30,6 +38,12 @@ class OurMetricsServiceProvider extends ServiceProvider
 				// Let us not break the app because of metrics. App > Metrics
 			}
 		} );
+
+		/* --------------------------------------------------------
+		 * Queue events
+		 * ----------------------------------------------------- */
+		$router = $this->app->make( Router::class );
+		$router->aliasMiddleware( 'ourmetrics', MetricHttpProcessingTime::class );
 	}
 
 	public function register()
