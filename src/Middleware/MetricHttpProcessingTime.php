@@ -22,6 +22,8 @@ class MetricHttpProcessingTime
 	/**
 	 * @param Request $request
 	 * @param         $response
+	 *
+	 * @throws \Exception
 	 */
 	public function terminate( Request $request, $response ) {
 		OurMetrics::dispatch( new Metric(

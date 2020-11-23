@@ -10,17 +10,6 @@
 
 	/*
 	|--------------------------------------------------------------------------
-	| Track controller methods
-	|--------------------------------------------------------------------------
-	|
-	| When enabled, every controller method called will be monitored and counted.
-	|
-	| Example: UserController@store
-	*/
-	'track_controllers'    => false,
-
-	/*
-	|--------------------------------------------------------------------------
 	| HTTP Connection
 	|--------------------------------------------------------------------------
 	|
@@ -39,7 +28,7 @@
 	| Currently it is not possible to add/remove headers.
 	*/
 	'headers'              => [
-		'user_agent' => 'OurMetrics SDK v0.1.0',
+		'user_agent' => 'OurMetrics SDK v1.0.0',
 		'connection' => 'close',
 	],
 
