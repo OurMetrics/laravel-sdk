@@ -40,7 +40,11 @@ class MetricHttpProcessingTime
 
 		if ( $grouping = $request->attributes->get( '_ourMetrics_grouping' ) ) {
 			if ( $grouping === 'controller' ) {
-				$tags['controller'] = optional( $request->route() )->getAction() ?? 'Unknown controller';
+				if ( ( $controller = optional( $request->route() )->getAction() ) && isset( $controller['controller'] ) ) {
+					$tags['controller'] = $controller['controller'];
+				} else {
+					$tags['controller'] = 'Closure';
+				}
 			} elseif ( $grouping === 'endpoint' ) {
 				$tags['endpoint'] = $request->method() . ' ' . ( optional( $request->route() )->uri() ?? '/' );
 			}
