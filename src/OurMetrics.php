@@ -21,8 +21,8 @@ class OurMetrics extends \Illuminate\Support\Facades\Facade
 		app()->singleton( 'ourmetrics', function () {
 			return new Client(
 				config( 'ourmetrics.project_key' ),
-				Arr::except( config( 'ourmetrics' ), [ 'project_key' ] ),
-				true
+				Arr::except( config( 'ourmetrics' ), [ 'project_key', 'silence_exceptions' ] ),
+				config('ourmetrics.silence_exceptions')
 			);
 		} );
 	}
